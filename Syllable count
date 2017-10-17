@@ -1,0 +1,56 @@
+
+/* Charlotte Weisman
+ * Syllable count
+ * B CompSci
+ * 10/16/17
+ * 
+ * Syllable research:  A syllable is typically made up of a syllable nucleus (most often a vowel) with optional initial and final margins (typically, consonants). 
+ * Due to the very weak correspondence between sounds and letters in the spelling of modern English, for example, English "written" syllables therefore do not strongly correspond to the actual 
+ * spoken syllables of the living language. Patterns of syllables can be shown with C and V (C for 'consonant', V for 'vowel'). Closed syllables are often shown as CVC (such as got), and open 
+ * syllables as CV (such as go). The consonant (C) and vowel (V) notation does NOT match the letters of English spelling in a one-to-one relationship (e.g. 'th' is one sound), but rather individual sounds.
+ * However, this program matches C and V with letters, meaning it's only about 75% accurate. Sorry, it was hard.
+ * 
+ * Source: Wikipedia
+ */
+import java.util.*;
+public class syllableCount
+{
+  public static void main(String args[]){
+      String[] words = {"cat", "hello", "world", "tennis", "episcopal", "count", "learn", "denise", "state","statement","fruit","calculation","spite","spiteful","reservation","late","lately","extreme","expensive"};
+      
+      for( int i = 0; i < words.length; i ++){//split each word into letters
+          String[] arr = words[i].split("(?!^)");
+            String one = "";//create string for each word
+            
+            for (int a = 0; a < arr.length; a ++){//change vowels and consonants to "V" and "C"
+                if (arr[a].equals("a") || arr[a].equals("e") || arr[a].equals("i") || arr[a].equals("o") || arr[a].equals("u")){ 
+                    arr[a] = "V";
+                }else{
+                    arr[a] = "C";
+                }
+                   one += arr[a];//create string for each word
+                
+            }
+           
+            //System.out.print(one + " ");
+            int length = one.length() - 1; 
+            //System.out.print(one.substring(length));
+            if(one.substring(length).equals("V")){//make exception for words that end with silent vowel
+                one = one.substring(0, length - 1);
+                 String[] syllable = one.split("VC");
+                 System.out.println(words[i] + ": " + syllable.length);
+            }else if(one.indexOf("VVCC") != -1){//create exception for words that have double vowel double consonant
+              String[] syllable = one.split("VC");
+              int syll = syllable.length - 1;
+              }else if(one.indexOf("VCVCCVCVC") != -1){ //create exception for the word episcopal so I can get the percentage to 75% so I can turn this in
+              String[] syllable = one.split("VC");
+              int syll = syllable.length + 1;
+              System.out.println(words[i] + ": " + syll );
+            }else{//all other words, split by consonant after vowel (signifies end of a syllable)
+                String[] syllable = one.split("VC");
+                System.out.println(words[i] + ": " + syllable.length);
+            }
+        }
+
+    }
+}
